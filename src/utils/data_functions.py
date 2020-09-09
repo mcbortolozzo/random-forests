@@ -10,9 +10,9 @@ def get_majority_class(data, class_attribute):
 def get_class_entropy(data, target_attribute):
 	total_entries = len(data)
 	class_entropy = 0
-	for v in data[target_attribute].unique().values:
+	for v in data[target_attribute].unique():
 		v_count = len(data[data[target_attribute] == v])
-		prob = v_count/total_entries
+		prob = float(v_count)/total_entries
 		class_entropy -= prob*np.log2(prob)
 
 	return class_entropy
@@ -20,10 +20,10 @@ def get_class_entropy(data, target_attribute):
 def get_attribute_entropy(data, feature, target_attribute):
 	data_len = len(data)
 	attribute_entropy = 0
-	for v in data[feature].unique().values:
+	for v in data[feature].unique():
 		data_part = data[data[feature] == v]
 		part_class_entropy = get_class_entropy(data_part, target_attribute)
-		attribute_entropy += len(data_part)/data_len*part_class_entropy
+		attribute_entropy += float(len(data_part))/data_len*part_class_entropy
 
 	return attribute_entropy
 
@@ -38,8 +38,10 @@ def get_best_split_attribute(data, attributes, target_attribute, criterion='entr
 		if criterion == 'entropy':
 			attr_entropy = get_attribute_entropy(data[[attr, target_attribute]], attr, target_attribute)
 			attr_gain = class_entropy - attr_entropy
-			if attr_gain > highest_gain:
+			if attr_gain >= highest_gain:
 				best_attr = attr
 				highest_gain = attr_gain
 
-	return best_attr
+	assert best_attr is not None
+
+	return best_attr, highest_gain

@@ -7,6 +7,3 @@ class Node():
 
 	def add_child(self, node):
 		self.children.append(node)
-
-	def is_leaf(self, node):
-		return len(self.children) == 0
