@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from utils import is_data_of_same_class, get_majority_class, get_attribute_partitions
+from utils import is_data_of_same_class, get_majority_class
 from utils import AttributeSelector
 
 from .decision_tree_node import LeafDecisionTreeNode, StringDecisionTreeNode, NumericDecisionTreeNode

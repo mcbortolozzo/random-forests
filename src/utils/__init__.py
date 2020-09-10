@@ -1,2 +1,2 @@
-from .data_functions import is_data_of_same_class, get_majority_class, get_best_split_attribute, get_attribute_partitions
+from .data_functions import is_data_of_same_class, get_majority_class
 from .attribute_selector import AttributeSelector
