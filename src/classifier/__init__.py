@@ -1,1 +1,2 @@
-from .decision_tree import DecisionTree, LeafDecisionTreeNode, StringDecisionTreeNode
+from .decision_tree import DecisionTree
+from .decision_tree_node import LeafDecisionTreeNode, StringDecisionTreeNode, NumericDecisionTreeNode
