@@ -19,6 +19,17 @@ def compare_decision_tree(expected_node, actual_node):
 			assert expected_child, "Expected %s to be in node children but found %s" % (k, actual_node.children.keys())
 			compare_decision_tree(expected_node.children[k], actual_node.children[k])
 
+def print_tree(node, tab_level):
+
+	if(node.is_leaf):
+		print("%s Leaf Node - Class: %s" % ("".join(["\t"]*tab_level), node.class_id))
+	else:
+		print("%s Decision Node - Attribute: %s, Gain: %.3f"  % ("".join(["\t"]*tab_level), node.attribute[0], node.gain))
+
+		for k,v in node.children.items():
+			print("%s Case: %s" % ("".join(["\t"]*tab_level), k))
+			print_tree(v, tab_level+1)
+
 
 
 print('Loading Benchmark Data')
@@ -64,3 +75,7 @@ expected_tree.root.add_child('Chuvoso', node)
 compare_decision_tree(expected_tree.root, actual_tree.root)
 
 print("Benchmark Passed")
+
+print("Tree Output:")
+
+print_tree(actual_tree.root, 0)
