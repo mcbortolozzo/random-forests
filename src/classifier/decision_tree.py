@@ -8,7 +8,7 @@ from .decision_tree_node import LeafDecisionTreeNode, StringDecisionTreeNode, Nu
 
 class DecisionTree():
 
-	def __init__(self, criterion = 'entropy', numeric_partition='mean', attribute_sampler='n'):
+	def __init__(self, criterion = 'entropy', numeric_partition='mean', attribute_sampler='logn'):
 		self.attribute_selector = AttributeSelector.Create(criterion, numeric_partition, attribute_sampler)
 
 	def train(self, data, feature_attributes, target_attribute):
