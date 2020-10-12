@@ -46,9 +46,12 @@ class NumericDecisionTreeNode(AttributeDecisionTreeNode):
 			self.below_child = value
 
 	def get_child(self, attribute_value):
+		print('aaaaaaaa')
 		if attribute_value < self.splitting_point:
+			assert self.below_child
 			return self.below_child
 		else:
+			assert self.above_child
 			return self.above_child	
 
 	def get_children_count(self):
@@ -62,7 +65,9 @@ class StringDecisionTreeNode(AttributeDecisionTreeNode):
 		self.children = {}
 
 	def get_child(self, attribute_value):
-		return self.children[attribute_value]
+		child = self.children[attribute_value]
+		assert child
+		return child
 
 	def add_child(self, key, value):
 		self.children[key] = value

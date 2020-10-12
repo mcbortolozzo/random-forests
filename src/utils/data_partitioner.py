@@ -46,9 +46,9 @@ class UniqueStringDataPartitioner(DataTypePartitioner):
 class MeanNumericDataPartitioner(DataTypePartitioner):
 
 	def split(self, data, attribute):
-		splitting_point = data[attr].mean()
+		splitting_point = data[attribute].mean()
 		# Using split point +/- 1 as key for correct insertion on tree TODO find better way
-		return { 
-			splitting_point-1: data[data[attr] < splitting_point],
-			splitting_point+1: data[data[attr] >= splitting_point]
-		}, splitting_point
+		return [ 
+			(splitting_point-1, data[data[attribute] < splitting_point]),
+			(splitting_point+1, data[data[attribute] >= splitting_point])
+		], splitting_point

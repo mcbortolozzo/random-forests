@@ -10,3 +10,11 @@ def is_data_of_same_class(data, class_attribute):
 
 def get_majority_class(data, class_attribute):
 	return data[class_attribute].mode()[0]
+
+def get_possible_values(df):
+	possible_values = {}
+	for key in df.columns:
+		if not is_numeric_dtype(df[key]):
+			possible_values[key] = df[key].unique()
+
+	return possible_values

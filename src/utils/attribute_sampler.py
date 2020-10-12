@@ -1,3 +1,4 @@
+import numpy as np
 
 class AttributeSampler():
 
@@ -19,7 +20,7 @@ class NAttributeSampler(AttributeSampler):
 	def sample_attributes(self, attributes):
 		return attributes
 
-class LogNAttributesSampler(AttributeSampler):
+class LogNAttributeSampler(AttributeSampler):
 
 	def sample_attributes(self, attributes):
 		attr_len = len(attributes)

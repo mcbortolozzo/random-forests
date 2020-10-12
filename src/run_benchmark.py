@@ -1,6 +1,7 @@
 import pandas as pd
 
 from classifier import DecisionTree, StringDecisionTreeNode, LeafDecisionTreeNode
+from utils import get_possible_values
 
 BENCHMARK_DATASET = './data/dadosBenchmark_validacaoAlgoritmoAD.csv'
 
@@ -33,14 +34,15 @@ def print_tree(node, tab_level):
 
 
 print('Loading Benchmark Data')
-df = pd.read_csv(BENCHMARK_DATASET, delimiter=';')
+df = pd.read_csv(BENCHMARK_DATASET, delimiter=';', dtype=str)
 
 feature_columns = list(df.columns.values)
 feature_columns.remove(TARGET_COLUMN)
 
 print('Training Decision Tree')
-actual_tree = DecisionTree()
-actual_tree.train(df, feature_columns, TARGET_COLUMN)
+actual_tree = DecisionTree(attribute_sampler='n')
+possible_values = get_possible_values(df)
+actual_tree.train(df, possible_values, feature_columns, TARGET_COLUMN)
 
 print('Validating Nodes')
 # Build correct tree manually

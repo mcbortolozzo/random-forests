@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 from evaluation import Bootstrap, StratifiedKFolds
+from classifier import DecisionTree
+from utils import get_possible_values
 
 DATA = './data/dadosBenchmark_validacaoAlgoritmoAD.csv'
 LARGE_DATA = './data/house_votes_84.tsv'
@@ -62,10 +64,27 @@ def test_kfolds_5_large_data():
 
 	assert len(fold_indexes) == len(large_test_data)
 
+def test_prediction():
+	expected_prediction = 'Sim'
+	df = pd.read_csv(DATA, delimiter=';', dtype=str)
+	feature_columns = ['Tempo', 'Temperatura', 'Umidade', 'Ventoso']
+	actual_tree = DecisionTree()
+	possible_values = get_possible_values(df)
+	actual_tree.train(df, possible_values, feature_columns, 'Joga')
+
+	prediction_data = pd.DataFrame.from_dict({'Tempo': ['Nublado'], 'Temperatura': ['Quente'], 'Umidade': ['Alta'], 'Ventoso': ['Falso']}).iloc[0]
+
+	actual_prediction = actual_tree.predict(prediction_data)
+
+	assert actual_prediction == expected_prediction
 
 
+print('Validating Bootstrap')
 test_bootstrap()
+print('Validating Folds')
 test_kfolds_3()
 test_kfolds_5_large_data()
+print('Validating Prediction')
+test_prediction()
 
 print("Everything seems to be ok")
