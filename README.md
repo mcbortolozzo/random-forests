@@ -16,6 +16,8 @@ Download the data:
 make download-data
 ```
 
+**Important:** The data for the validation benchmark has to be downloaded manually and the `.csv` file placed in the `data` folder
+
 ## Validation
 
 Run the validation benchmark:
