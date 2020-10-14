@@ -16,6 +16,7 @@ class AttributeSelector():
 		highest_gain = 0
 		best_attribute = None
 		best_data_partition = None
+		best_splitting_point = None
 		for attr in selected_attributes:
 			data_partitions, is_numeric, splitting_point = self.data_partitioner.partition_attribute(data, attr)
 			gain = self.gain_calculator.calculate_gain(data_partitions, target_attribute)
@@ -23,10 +24,11 @@ class AttributeSelector():
 				highest_gain = gain
 				best_attribute = attr
 				best_data_partition = data_partitions
+				best_splitting_point = splitting_point
 
 		assert best_attribute is not None
 
-		return best_attribute, highest_gain, best_data_partition, is_numeric, splitting_point
+		return best_attribute, highest_gain, best_data_partition, is_numeric, best_splitting_point
 
 	@classmethod
 	def Create(cls, criterion, numeric_partition, attribute_sampling):
