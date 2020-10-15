@@ -33,8 +33,7 @@ class Analyzer:
                 recall += self.__confusionMatrix[key].loc[key] / sumClass
             # precision Macro
             recall = recall/len(self.__listKeysClasses)
-        else:
-            if precType == "micro":
+        elif precType == "micro":
                 sumClass = 0.0
                 for key in self.__listKeysClasses:
                     for keyPredicted in self.__listKeysClasses:
@@ -60,8 +59,7 @@ class Analyzer:
                 prec += self.__confusionMatrix[key].loc[key] / sumClass
             # precision Macro
             prec = prec/len(self.__listKeysClasses)
-        else:
-            if precType == "micro":
+        elif precType == "micro":
                 sumClass = 0.0
                 for key in self.__listKeysClasses:
                     for keyOriginal in self.__listKeysClasses:
@@ -74,18 +72,10 @@ class Analyzer:
                 
         return prec
 
-    def calcFBethaMeasure(self, betha,precType):
+    def calcFBethaMeasure(self, betha,precType = "micro"):
         num = self.calcPrecision(precType) * self.calcRecall(precType)
         denom = (pow(betha,2)*self.calcPrecision(precType) + self.calcRecall(precType))
         return (1+pow(betha,2))*((num)/(denom))
-
-    @classmethod
-    def calcAverage(cls,valuesList):
-        return numpy.mean(valuesList)
-
-    @classmethod
-    def calcStandarDeviation(cls,valuesList):
-        return numpy.std(valuesList)
 
     def __createConfusionMatrix(self,listKeyClasses):
         self.__confusionMatrix = pd.DataFrame(0.0,index=listKeyClasses,columns=listKeyClasses)
@@ -98,3 +88,37 @@ class Analyzer:
 
     def getConfusionMatrix(self):
         return self.__confusionMatrix
+
+    @classmethod
+    def calcAverage(cls,valuesList):
+        return numpy.mean(valuesList)
+
+    @classmethod
+    def calcStandarDeviation(cls,valuesList):
+        return numpy.std(valuesList)
+
+    @classmethod
+    def calcPercentile(cls,valuesList, percent):
+        return numpy.percentile(valuesList, percent)
+
+    @classmethod
+    def calcMedian(cls,valuesList):
+        return numpy.median(valuesList)
+
+    @classmethod
+    def getPercentOfClasses(cls,data,column):
+        auxPercent = {}
+        countQtdOfInstances = 0
+        percentValuesByClass = {}
+
+        for cellValue in data[column]:
+            countQtdOfInstances += 1
+            if(cellValue in auxPercent):
+                auxPercent[cellValue] += 1
+            else:
+                auxPercent[cellValue] = 1
+        
+        for key in auxPercent.keys():
+            percentValuesByClass[key] = (auxPercent[key]/countQtdOfInstances)*100.0
+
+        return percentValuesByClass
