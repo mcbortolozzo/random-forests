@@ -41,12 +41,13 @@ class NumericDecisionTreeNode(AttributeDecisionTreeNode):
 
 	def add_child(self, key, value):
 		if key > self.splitting_point:
+			assert not self.above_child
 			self.above_child = value
 		else:
+			assert not self.below_child
 			self.below_child = value
 
 	def get_child(self, attribute_value):
-		print('aaaaaaaa')
 		if attribute_value < self.splitting_point:
 			assert self.below_child
 			return self.below_child
